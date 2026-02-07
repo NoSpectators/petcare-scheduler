@@ -29,7 +29,7 @@ public class PetCareScheduler {
             switch (choice) {
                 case "1" -> registerPet();
                 case "2" -> schedulePetAppointment();
-//                case "3" -> displayPets();
+                case "3" -> displayPets();
 //                case "4" -> displayPetAppointments();
 //                case "5" -> generateReports();
                 case "6" -> {
@@ -120,20 +120,20 @@ public class PetCareScheduler {
         System.out.println("Pet appointment scheduled!");
     }
 
-    /*
-    private static void displayHouseholds() {
-        // check if households map is empty
-        if (households.isEmpty()) {
-            System.out.println("No households registered.");
+
+    private static void displayPets() {
+        // check if map is empty
+        if (pets.isEmpty()) {
+            System.out.println("No pets registered.");
             return; // exit early
         }
 
-        System.out.println("\nRegistered Households: ");
-        for (Household h : households.values()) {
-            System.out.println(h);
+        System.out.println("\nRegistered Pets: ");
+        for (Pet p : pets.values()) {
+            System.out.println(p);
         }
     }
-
+    /*
     private static void displayHouseholdEvents() {
         // prompt user for household id
         System.out.println("Enter household ID: ");
