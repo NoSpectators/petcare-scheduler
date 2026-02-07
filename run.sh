@@ -1,4 +1,4 @@
 #!/bin/bash
 
 javac *.java
-#java PetCareScheduler
+java PetCareScheduler

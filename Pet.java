@@ -17,7 +17,7 @@ public class Pet implements Serializable {
     private LocalDate registrationDate;
     private List<Appointment> appointments;
 
-    // master constructor
+    // constructor
     public Pet(String id, String name, String breed, int age, String ownerName, String contactInfo) {
         this.id = id;
         this.name = name;
@@ -28,11 +28,6 @@ public class Pet implements Serializable {
         // hardcoded logic
         this.registrationDate = LocalDate.now(); // initialized to moment of new Pet object creation
         this.appointments = new ArrayList<>(); // initialized (empty, not null)
-    }
-
-    // minimal constructor (passes default values age, ownerName, contactInfo to master constructor)
-    public Pet(String id, String name, String breed) {
-        this(id, name, breed, 0, "N/A", "N/A");
     }
 
     // getters

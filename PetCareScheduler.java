@@ -28,10 +28,10 @@ public class PetCareScheduler {
             // the -> syntax automaticallys inserts "break" statement after calling function
             switch (choice) {
                 case "1" -> registerPet();
-                case "2" -> schedulePetAppointment();
-                case "3" -> displayPets();
-                case "4" -> displayPetAppointments();
-                case "5" -> generateReports();
+//                case "2" -> schedulePetAppointment();
+//                case "3" -> displayPets();
+//                case "4" -> displayPetAppointments();
+//                case "5" -> generateReports();
                 case "6" -> {
                     // savePetsToFile();
                     running = false;
@@ -53,24 +53,41 @@ public class PetCareScheduler {
             return; // stop execution and return early
         }
 
-        // prompt user to enter the pet's name
-        System.out.print("Enter pet name: ");
+        // name
+        System.out.print("Enter Pet name: ");
         String name = scanner.nextLine().trim();
 
         // breed
-        System.out.println("Enter pet's breed: ");
+        System.out.println("Enter Pet breed: ");
         String breed = scanner.nextLine().trim();
 
+        // age
+        System.out.println("Enter Pet Age: ");
+        int age = Integer.parseInt(scanner.nextLine().trim());
+        if (age < 0) {
+            System.out.println("invalid age.");
+            return;
+        }
+
+        // owner name
+        System.out.println("Enter Pet Owner Name: ");
+        String ownerName = scanner.nextLine().trim();
+
+        // contact info
+        System.out.println("Enter Contact Information: ");
+        String contactInfo = scanner.nextLine().trim();
+
         // create a new HouseHold object using the inputs
-        Household household = new Household(id, name, address);
+        Pet pet = new Pet(id, name, breed, age, ownerName, contactInfo);
 
         // add the new household to the households map
-        households.put(id, household);
+        pets.put(id, pet);
 
         // confirm to the user the household registration
-        System.out.println("Household registered successfully on " + household.getJoinDate());
+        System.out.println("Pet registered successfully on " + pet.getRegistrationDate());
     }
 
+    /*
     private static void logRecyclingEvent() {
         // prompt user for household id
         System.out.println("Enter household ID: ");
@@ -215,6 +232,6 @@ public class PetCareScheduler {
         } catch(IOException | ClassNotFoundException e) {
             System.out.println("Error loading data: " + e.getMessage());
         }
-    }
+    } */
 
 }
