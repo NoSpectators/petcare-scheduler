@@ -30,7 +30,7 @@ public class PetCareScheduler {
                 case "1" -> registerPet();
                 case "2" -> schedulePetAppointment();
                 case "3" -> displayPets();
-//                case "4" -> displayPetAppointments();
+                case "4" -> displayPetAppointments();
 //                case "5" -> generateReports();
                 case "6" -> {
                     // savePetsToFile();
@@ -133,38 +133,33 @@ public class PetCareScheduler {
             System.out.println(p);
         }
     }
-    /*
-    private static void displayHouseholdEvents() {
+
+    private static void displayPetAppointments() {
         // prompt user for household id
-        System.out.println("Enter household ID: ");
+        System.out.println("Enter Pet ID: ");
         String id = scanner.nextLine().trim();
 
-        // look up household in hashmap by id
-        Household household = households.get(id);
+        // look up pet in hashmap by id
+        Pet pet = pets.get(id);
 
         // if not found show error and exit
-        if (household == null) {
-            System.out.println("Error: Household ID not found.");
+        if (pet == null) {
+            System.out.println("Error: Pet ID not found.");
             return;
         }
 
-        // print all recycling events
-        System.out.println("\nRecycling Events for " + household.getName() + ":");
-        if (household.getEvents().isEmpty()) {
-            System.out.println("No events logged.");
+        // print all pet appointments
+        System.out.println("\nAppointments for " + pet.getName() + ":");
+        if (pet.getAppointments().isEmpty()) {
+            System.out.println("No appointments scheduled.");
             return;
         }
-        for (RecyclingEvent e : household.getEvents()) {
-            System.out.println(e); // the stringified version (calls toString())
+        for (Appointment appt : pet.getAppointments()) {
+            System.out.println(appt); // the stringified version (calls toString())
         }
 
-        // print total weight recycled by household
-        System.out.println("Total weight recycled: " + household.getTotalWeight() + " kg");
-
-        // print total eco points earned
-        System.out.println("Total eco points earned: " + household.getTotalPoints() + " points");
     }
-
+    /*
     private static void generateReports() {
         if (households.isEmpty()) {
             System.out.println("No households registered for eco-points program.");
