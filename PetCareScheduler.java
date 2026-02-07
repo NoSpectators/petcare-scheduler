@@ -28,7 +28,7 @@ public class PetCareScheduler {
             // the -> syntax automaticallys inserts "break" statement after calling function
             switch (choice) {
                 case "1" -> registerPet();
-//                case "2" -> schedulePetAppointment();
+                case "2" -> schedulePetAppointment();
 //                case "3" -> displayPets();
 //                case "4" -> displayPetAppointments();
 //                case "5" -> generateReports();
@@ -43,7 +43,7 @@ public class PetCareScheduler {
     }
 
     private static void registerPet() {
-        // promt user to enter a unique household ID
+        // prompt user to enter a unique household ID
         System.out.print("Enter Pet ID: ");
         String id = scanner.nextLine().trim();
 
@@ -87,52 +87,40 @@ public class PetCareScheduler {
         System.out.println("Pet registered successfully on " + pet.getRegistrationDate());
     }
 
-    /*
-    private static void logRecyclingEvent() {
-        // prompt user for household id
-        System.out.println("Enter household ID: ");
+
+    private static void schedulePetAppointment() {
+        // prompt user to enter a unique household ID
+        System.out.print("Enter Pet ID: ");
         String id = scanner.nextLine().trim();
 
-        // look up household in hashmap by id
-        Household household = households.get(id);
+        // look up pet in hashmap by id
+        Pet pet = pets.get(id);
 
         // if not found show error and exit
-        if (household == null) {
-            System.out.println("Error: Household ID not found.");
+        if (pet == null) {
+            System.out.println("Error: Pet ID not found.");
             return;
         }
 
-        // ask user for material type they recycled
-        System.out.println("Enter material type (plastic/glass/metal/paper): ");
-        String material = scanner.nextLine();
+        // appt type
+        System.out.println("Enter appointment type (shots/check-up/annual-screening/other): ");
+        String appointmentType = scanner.nextLine();
 
-        double weight = 0.0;
-        // loop until a valid weight is entered
-        while (true) {
-            try {
-                System.out.print("Enter weight of material recycled (in kg): ");
-                weight = Double.parseDouble(scanner.nextLine().trim());
-
-                if (weight <= 0) throw new IllegalArgumentException();
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid weight. Must be a positive number.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("Invalid weight. Must be a positive number.");
-            }
-
-        }
+        // notes
+        System.out.println("Enter any notes for pre-screening: ");
+        String notes = scanner.nextLine();
 
         // create new RecyclingEvent using the material and weight
-        RecyclingEvent event = new RecyclingEvent(material, weight);
+        Appointment appointment = new Appointment(appointmentType, notes);
 
         // add event to RecyclingEvents list
-        household.addEvent(event);
+        pet.addAppointment(appointment);
 
         // show success message
-        System.out.println("Recycling event logged! Points earned: " + event.getEcoPoints());
+        System.out.println("Pet appointment scheduled!");
     }
 
+    /*
     private static void displayHouseholds() {
         // check if households map is empty
         if (households.isEmpty()) {
