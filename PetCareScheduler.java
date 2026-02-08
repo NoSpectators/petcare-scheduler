@@ -160,6 +160,7 @@ public class PetCareScheduler {
 
     }
 
+    // FIXME: need to refactor duplicate code
     private static void generateReports() {
         // check if map is empty
         if (pets.isEmpty()) {
@@ -185,6 +186,22 @@ public class PetCareScheduler {
                 }
             }
         }
+        // find pets with past appointments (last 7 days)
+        LocalDate start = today.minusDays(7);
+        for (Pet p : pets.values()) {
+            List<Appointment> appointments = p.getAppointments();
+            if (!appointments.isEmpty()) {
+                for (Appointment appt: appointments) {
+                    LocalDate d = appt.getDate();
+                    if ( (d.isEqual(start) || d.isAfter(start)) &&
+                            (d.isEqual(today) || d.isBefore(today))) {
+                        System.out.println("\nAppointments for " + p.getName() + " within the last 7 days:" +
+                                "\n ---- " + appt.getDate() + " ---- ");
+                    }
+                }
+            }
+        }
+
     }
 
     /*
