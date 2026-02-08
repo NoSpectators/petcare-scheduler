@@ -31,7 +31,7 @@ public class PetCareScheduler {
                 case "2" -> schedulePetAppointment();
                 case "3" -> displayPets();
                 case "4" -> displayPetAppointments();
-//                case "5" -> generateReports();
+                case "5" -> generateReports();
                 case "6" -> {
                     // savePetsToFile();
                     running = false;
@@ -159,34 +159,35 @@ public class PetCareScheduler {
         }
 
     }
-    /*
+
     private static void generateReports() {
-        if (households.isEmpty()) {
-            System.out.println("No households registered for eco-points program.");
-            return;
+        // check if map is empty
+        if (pets.isEmpty()) {
+            System.out.println("No pets registered.");
+            return; // exit early
         }
 
-        // find household with hightest points
-        Household top = null;
-        for (Household h : households.values()) {
-            if (top == null || h.getTotalPoints() > top.getTotalPoints()) {
-                top = h;
+        // find pets with upcoming appointments (next week)
+        LocalDate today = LocalDate.now();
+        LocalDate end = today.plusDays(7);
+        for (Pet p : pets.values()) {
+
+            List<Appointment> appointments = p.getAppointments();
+            if (!appointments.isEmpty()) {
+                for (Appointment appt : appointments) {
+                    LocalDate d = appt.getDate();
+                    // on/after today AND on/before end
+                    if ( (d.isEqual(today) || d.isAfter(today) &&
+                            (d.isEqual(end) || d.isBefore(end))) ) {
+                        System.out.println("\nUpcoming appointments for " + p.getName() + ":" +
+                                "\n ---- " + appt.getDate() + " ---- ");
+                    }
+                }
             }
         }
-        System.out.println("\nHousehold with highest eco points: " +
-                           "\nID: " + top.getId() +
-                           "\nName: " + top.getName() +
-                           "\nPoints: " + top.getTotalPoints());
-
-        // calculate total community recycling weight
-        double totalWeight = 0.0;
-        for (Household h : households.values()) {
-            totalWeight += h.getTotalWeight();
-        }
-
-        System.out.println("Total Community Recycling Weight: " + totalWeight + " kg");
     }
 
+    /*
     private static void saveHouseholdsToFile() {
         try {
             // create a FileOutputStream to write to the file named "households.ser"
