@@ -160,6 +160,18 @@ public class PetCareScheduler {
 
     }
 
+    private static void printAppointmentsInRange(String label, LocalDate start, LocalDate end) {
+        for (Pet p : pets.values()) {
+            for (Appointment appt : p.getAppointments()) {
+                LocalDate d = appt.getDate();
+                if (!d.isBefore(start) && !d.isAfter(end)) {
+                    System.out.println("\n" + label + " for " + p.getName() + ":" +
+                            "\n ---- " + appt.getDate() + " ---- ");
+                }
+            }
+        }
+    }
+
     // FIXME: need to refactor duplicate code
     private static void generateReports() {
         // check if map is empty
@@ -168,39 +180,9 @@ public class PetCareScheduler {
             return; // exit early
         }
 
-        // find pets with upcoming appointments (next week)
         LocalDate today = LocalDate.now();
-        LocalDate end = today.plusDays(7);
-        for (Pet p : pets.values()) {
-
-            List<Appointment> appointments = p.getAppointments();
-            if (!appointments.isEmpty()) {
-                for (Appointment appt : appointments) {
-                    LocalDate d = appt.getDate();
-                    // on/after today AND on/before end
-                    if ( (d.isEqual(today) || d.isAfter(today) &&
-                            (d.isEqual(end) || d.isBefore(end))) ) {
-                        System.out.println("\nUpcoming appointments for " + p.getName() + ":" +
-                                "\n ---- " + appt.getDate() + " ---- ");
-                    }
-                }
-            }
-        }
-        // find pets with past appointments (last 7 days)
-        LocalDate start = today.minusDays(7);
-        for (Pet p : pets.values()) {
-            List<Appointment> appointments = p.getAppointments();
-            if (!appointments.isEmpty()) {
-                for (Appointment appt: appointments) {
-                    LocalDate d = appt.getDate();
-                    if ( (d.isEqual(start) || d.isAfter(start)) &&
-                            (d.isEqual(today) || d.isBefore(today))) {
-                        System.out.println("\nAppointments for " + p.getName() + " within the last 7 days:" +
-                                "\n ---- " + appt.getDate() + " ---- ");
-                    }
-                }
-            }
-        }
+        printAppointmentsInRange("Upcoming Appointments", today, today.plusDays(7));
+        printAppointmentsInRange("Appointments within the last week", today, today.minusDays(7));
 
     }
 
