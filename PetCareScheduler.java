@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * Main app to run the Pet Care Scheduler
@@ -110,8 +114,34 @@ public class PetCareScheduler {
         System.out.println("Enter any notes for pre-screening: ");
         String notes = scanner.nextLine();
 
+        // date
+        System.out.println("Input the date in MM/dd/yyyy format:");
+        LocalDate date;
+        try {
+            date = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format.");
+            return;
+        }
+
+        // time
+        System.out.println("Input the time in HH:mm:ss format:");
+        LocalTime time;
+        try {
+            time = LocalTime.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("HH:mm:ss"));
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid time format.");
+            return;
+        }
+
+        LocalDateTime appointmentDateTime = LocalDateTime.of(date, time);
+        if (appointmentDateTime.isBefore(LocalDateTime.now())) {
+            System.out.println("Invalid appointment date/time (must be in the future).");
+            return;
+        }
+
         // create new RecyclingEvent using the material and weight
-        Appointment appointment = new Appointment(appointmentType, notes);
+        Appointment appointment = new Appointment(appointmentType, notes, date, time);
 
         // add event to RecyclingEvents list
         pet.addAppointment(appointment);

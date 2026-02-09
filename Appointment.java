@@ -11,15 +11,6 @@ public class Appointment implements Serializable {
     private LocalDate date;
     private LocalTime time;
 
-    // constructor one: date and time default to current date/time
-    public Appointment(String appointmentType, String notes) {
-        this.appointmentType = appointmentType;
-        this.notes = notes;
-        this.date = LocalDate.now();
-        this.time = LocalTime.now();
-    }
-
-    // constructor two: date and time are specifically set (normal way)
     public Appointment(String appointmentType, String notes, LocalDate date, LocalTime time) {
         this.appointmentType = appointmentType;
         this.notes = notes;
