@@ -16,7 +16,7 @@ public class PetCareScheduler {
     private static Map<String, Pet> pets = new HashMap<>(); // hashmap for Pets
 
     public static void main(String[] args) {
-        // loadPetsFromFile(); // load previously saved Pet data (serialization) for persistence between runs
+        loadPetsFromFile(); // load previously saved Pet data (serialization) for persistence between runs
         boolean running = true;
         while (running) {
             System.out.println("\n=== Pet Care Scheduler ===");
@@ -37,7 +37,7 @@ public class PetCareScheduler {
                 case "4" -> displayPetAppointments();
                 case "5" -> generateReports();
                 case "6" -> {
-                    // savePetsToFile();
+                    savePetsToFile();
                     running = false;
                     System.out.println("Data saved. Goodbye!");
                 }
@@ -216,35 +216,35 @@ public class PetCareScheduler {
 
     }
 
-    /*
-    private static void saveHouseholdsToFile() {
+
+    private static void savePetsToFile() {
         try {
             // create a FileOutputStream to write to the file named "households.ser"
-            ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream("households.ser"));
+            ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream("pets.ser"));
 
-            // write the entire households map to the file
-            out.writeObject(households);
+            // write the entire pets map to the file
+            out.writeObject(pets);
         } catch (IOException e) {
             System.out.println("Error: saving data: " + e.getMessage());
         }
     }
 
     @SuppressWarnings("unchecked") // suppresses unchecked cast warning when reading the object
-    private static void loadHouseholdsFromFile() {
+    private static void loadPetsFromFile() {
         // use a try-with-resources block to automatically close the input stream
         try (
-                ObjectInputStream in = new ObjectInputStream(new FileInputStream("households.ser"));
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("pets.ser"));
         ){
             // read the object from the file and cast it back to the correct type
-            households = (Map<String, Household>) in.readObject();
+            pets = (Map<String, Pet>) in.readObject();
 
             // confirmation message to let the user know data was loaded
-            System.out.println("Household data loaded.");
+            System.out.println("Pet data loaded.");
         } catch(FileNotFoundException e) {
             System.out.println("No saved data found. Starting fresh.");
         } catch(IOException | ClassNotFoundException e) {
             System.out.println("Error loading data: " + e.getMessage());
         }
-    } */
+    }
 
 }
